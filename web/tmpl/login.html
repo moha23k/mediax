@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login</title>
+    <meta name="author" content="ATP">
+    <style>html,body{height:100%;margin:0;padding:0;box-sizing:border-box}
+body{user-select:none;display:flex;justify-content:center;align-items:flex-start;padding-top:20vh;margin:0;background:#f0f0fc}
+input{outline:none;border:none;color:#333;font-size:16px}
+button{padding:10px;background:#2d8cdc;color:#fff;border:none;border-radius:28px;font-size:16px;font-weight:600;cursor:pointer}
+button:hover{background:#1877f2}
+.login-box{background:#F0F8FF;padding:40px;display:flex;flex-direction:column;border-radius:30px;box-shadow:0 0 30px rgba(33,33,33,.1);gap:20px}
+.login-row{background:#fff;box-shadow:0 0 20px rgba(33,33,33,.05);padding:10px;display:flex;flex-direction:column;gap:5px;border-radius:20px;color:#333}
+.login-input{display:flex;align-items:center;gap:5px;padding:0 5px;color:#aaa}</style>
+</head>
+<body>
+    <form class="login-box" action="/login" method="POST">
+        <div class="login-row">
+          <div class="login-input">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" stroke-width="2" stroke="currentColor" fill="none"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input type="username" name="username" placeholder="Username" required />
+          </div>
+        </div>
+      
+        <div class="login-row">
+          <div class="login-input">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" stroke-width="2" stroke="currentColor" fill="none"><path d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input class="pas" type="password" name="password" placeholder="Password" required minlength="4" maxlength="64"/>
+          </div>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>

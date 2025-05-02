@@ -1,0 +1,33 @@
+{{ define "header" }}
+<header>
+    <div class="header-container">
+        <nav class="site-nav">
+            <a class='site-nav-link{{ if eq .Header.Current "home" }} nav-active{{end}}' href="/home">mediaX</a>
+            {{ range .Header.Options }}
+                <a class='site-nav-link{{ if eq $.Header.Current .Category }} nav-active{{end}}' href="/{{ .Category }}">{{ .CategoryName }}</a>
+            {{ end }}
+        </nav>
+        <input type="checkbox" id="search-toggle" style="display:none">
+        <label for="search-toggle" class="search-icon-toggle site-nav-search">
+            <span class="circle"></span>
+            <span class="handle"></span>
+        </label>
+        <div class="search-box-container">
+            <form class="search-box" action="/search" method="get">
+                <div class="search-bar">
+                    <input class="search-input" type="text" name="q" placeholder="搜索标题..." maxlength="32"/>
+                    <select class="search-select" name="subject_type">
+                        <option value="all">全部</option>
+                        <option value="book">图书</option>
+                        <option value="movie">电影</option>
+                        <option value="tv">剧集</option>
+                        <option value="anime">番剧</option>
+                        <option value="game">游戏</option>
+                    </select>
+                    <button class="search-button" type="submit">搜索</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+{{ end }}

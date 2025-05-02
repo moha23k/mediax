@@ -1,0 +1,117 @@
+{{ define "main" }}
+<main>
+    <div class="page-heading"> 
+        {{ .CategoryIcon }}
+        <h1>{{ .PageTitle }} ({{ .TotalCounts }})</h1>
+    </div>
+
+    {{ if ne .TotalCounts 0 }}
+    <div class="page-toolbar">
+        <div class="page-filter">
+            {{ range .StatusList }}
+                {{ if ne .Count 0 }}
+                <li><a href="/{{ $.Header.Current }}?status={{ .Value }}" class="{{ if eq $.Status .Value }}active{{ end }}">{{ .Label }}({{ .Count }})</a>
+                </li>
+                {{ end }}
+            {{ end }}
+        </div>
+        <div class="page-func">
+            <form method="get">
+                <label for="sort_by">排序: </label>
+                <select class="sort-select" name="sort_by" onchange="this.form.submit()">
+                    <option value="1"{{ if eq .SortBy 1 }} selected{{ end }}>最近添加</option>
+                    <option value="2"{{ if eq .SortBy 2 }} selected{{ end }}>最近标记</option>
+                    <option value="3"{{ if eq .SortBy 3 }} selected{{ end }}>最早添加</option>
+                    <option value="4"{{ if eq .SortBy 4 }} selected{{ end }}>最早标记</option>
+                </select>
+                <input type="hidden" name="page"  value="{{ .CurrentPage }}">
+                <input type="hidden" name="status" value="{{ .Status }}">
+            </form>
+            <a href="/add?subject_type={{ .Header.Current }}" title="添加">添加{{ .PageTitle }}+</a>
+        </div>
+    </div>
+
+    <ul class="subject-list">
+        {{ range .Subjects }}
+        <li>
+            <a class="subject-list-cover" href="{{ .SubjectURL }}">
+                <img class="subject-list-image" src="{{ .ImageURL }}" alt="{{ .Title }}" loading="lazy">
+            </a>
+            <div class="subject-list-info">
+                <h3 class="subject-list-title">
+                    <a href="{{ .SubjectURL }}">{{ .Title }}</a>
+                    {{ with .AltTitle }}
+                    <span class="note-color subject-list-alttitle">{{ . }}</span>
+                    {{ end }}
+                </h3>
+                {{ if .Creator }}
+                <p class="subject-list-pub"><label>{{ .CreatorLabel }}:</label>{{ .Creator }}</p>
+                {{ end }}
+                {{ if .PubDate }}
+                <p><label>{{ .PubDateLabel }}:</label>{{ .PubDate }}</p>
+                {{ end }}
+                <p class="note-color">
+                    {{ if eq .Rating 0 }}
+                    <i>暂未评分</i>
+                    {{ else }}
+                    {{ $star := div (mul .Rating 10) 2 }}
+                    <span class="rating-star-{{ $star }} rating-block note-color"></span>
+                    {{ end }}
+                </p>
+                <p>{{ .MarkDate }} {{ .StatusText }}</p>
+            </div>
+        </li>
+        {{ end }}
+    </ul>
+    {{ else }}
+    <div class="subject-list-null note-color">
+        <i>伟大的冒险，总是从一片空白开始。</i>
+        <p><a href="/add?subject_type={{ .Header.Current }}" title="添加">添加{{ .PageTitle }} (ง •̀_•́)ง</a></p>
+    </div>
+    {{ end }}
+
+    {{ if gt .TotalPages 1 }}
+    <div class="page-nav">
+        <div class="pagination">
+            {{ if gt .CurrentPage 1 }}
+            <a class="pagination-text" href="?page=1{{ .PageParams }}">首页</a>
+            <a class="pagination-number" href="?page={{ sub .CurrentPage 1 }}{{ .PageParams }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="currentColor"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </a>
+            {{ else }}
+            <span class="pagination-disable pagination-text">首页</span>
+            <span class="pagination-disable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="var(--note-color)"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </span>
+            {{ end }}
+    
+            {{ range .PageNumbers }}
+            {{ if eq . $.CurrentPage }}
+            <span class="pagination-current">{{ . }}</span>
+            {{ else }}
+            <a class="pagination-number" href="?page={{ . }}{{ $.PageParams }}">{{ . }}</a>
+            {{ end }}
+            {{ end }}
+    
+            {{ if lt .CurrentPage .TotalPages }}
+            <a class="pagination-number icon-mirror" href="?page={{ add .CurrentPage 1 }}{{ .PageParams }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="currentColor"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </a>
+            <a class="pagination-text" href="?page={{ .TotalPages }}{{ .PageParams }}">尾页</a>
+            {{ else }}
+            <span class="pagination-disable icon-mirror">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="var(--note-color)"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </span>
+            <span class="pagination-disable pagination-text">尾页</span>
+            {{ end }}
+        </div>
+        <form method="get" class="pagination-jump" style="display: inline;">
+            <input type="number" name="page" min="1" max="{{ .TotalPages }}" required autocomplete="off">
+            <input type="hidden" name="status" value="{{ .Status }}">
+            <input type="hidden" name="sort_by" value="{{ .SortBy }}">
+            <span class="note-color">( {{ .CurrentPage }} / {{ .TotalPages }} )</span>
+        </form>
+    </div>
+    {{ end }}
+</main>
+{{ end }}

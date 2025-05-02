@@ -1,0 +1,83 @@
+{{ define "main" }}
+<main>
+    <h1 class="page-heading">{{ .PageTitle }} ({{ .TotalCount }})</h1>
+
+    {{ if ne .TotalCount 0 }}
+    <ul class="subject-list">
+        {{ range .Subjects }}
+        <li>
+            <a class="subject-list-cover search-cover" href="{{ .SubjectURL }}"><img class="subject-list-image" src="{{ .ImageURL }}" alt="{{ .Title }}" loading="lazy"></a>
+            <div class="subject-list-info">
+                <h3 class="subject-list-title">
+                    <span style="color:var(--sec-note-color)">[{{ .SubjectType }}]</span>
+                    <a href="{{ .SubjectURL }}">{{ .Title }}</a>
+                    {{ with .AltTitle }}
+                    <span class="note-color subject-list-alttitle">{{ . }}</span>
+                    {{ end }}
+                </h3>
+                {{ if .Creator }}
+                <p class="subject-list-pub"><label>{{ .CreatorLabel }}:</label>{{ .Creator }}</p>
+                {{ end }}
+                {{ if .PubDate }}
+                <p><label>{{ .PubDateLabel }}:</label>{{ .PubDate }}</p>
+                {{ end }}
+                <p class="note-color">
+                    {{ if eq .Rating 0 }}
+                    <i>暂未评分</i>
+                    {{ else }}
+                    {{ $star := div (mul .Rating 10) 2 }}
+                    <span class="rating-star-{{ $star }} rating-block note-color"></span>
+                    {{ end }}
+                </p>
+                <p>{{ .MarkDate }} {{ .StatusText }}</p>
+            </div>
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+
+    {{ if gt .TotalPages 1 }}
+    <div class="page-nav">
+        <div class="pagination">
+            {{ if gt .CurrentPage 1 }}
+            <a class="pagination-text" href="?page=1{{ .PageParams }}">首页</a>
+            <a class="pagination-number" href="?page={{ sub .CurrentPage 1 }}{{ .PageParams }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="currentColor"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </a>
+            {{ else }}
+            <span class="pagination-disable pagination-text">首页</span>
+            <span class="pagination-disable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="var(--note-color)"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </span>
+            {{ end }}
+    
+            {{ range .PageNumbers }}
+            {{ if eq . $.CurrentPage }}
+            <span class="pagination-current">{{ . }}</span>
+            {{ else }}
+            <a class="pagination-number" href="?page={{ . }}{{ $.PageParams }}">{{ . }}</a>
+            {{ end }}
+            {{ end }}
+    
+            {{ if lt .CurrentPage .TotalPages }}
+            <a class="pagination-number icon-mirror" href="?page={{ add .CurrentPage 1 }}{{ .PageParams }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="currentColor"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </a>
+            <a class="pagination-text" href="?page={{ .TotalPages }}{{ .PageParams }}">尾页</a>
+            {{ else }}
+            <span class="pagination-disable icon-mirror">
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" viewBox="0 0 8 12" fill="var(--note-color)"><path d="M7.41 1.41L6 0 0 6l6 6 1.41-1.41L2.83 6z" fill-rule="evenodd"/></svg>
+            </span>
+            <span class="pagination-disable pagination-text">尾页</span>
+            {{ end }}
+        </div>
+        <form method="get" class="pagination-jump" style="display: inline;">
+            <input type="number" name="page" min="1" max="{{ .TotalPages }}" required autocomplete="off">
+            <input type="hidden" name="q" value="{{ .Query }}">
+            <input type="hidden" name="subject_type" value="{{ .QueryType }}">
+            <span class="note-color">( {{ .CurrentPage }} / {{ .TotalPages }} )</span>
+        </form>
+    </div>
+    {{ end }}
+</main>
+{{ end }}

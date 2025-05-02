@@ -1,0 +1,78 @@
+{{ define "main" }}
+<main>
+  <h2>{{ .PageTitle }}</h2>
+  <form class="edit-page" action="{{ .SubmitURL }}" method="POST" enctype="multipart/form-data">
+    <div class="subject">
+      <div class="subject-info">
+        <img class="subject-cover" src="{{ .ImageURL }}" alt="{{ .Subject.Title }}">
+        <div class="subject-detail">
+          <p><label for="title">标题:</label><input type="text" id="title" name="title" value="{{ .Subject.Title }}" required></p>
+          <p><label for="alt_title">别名/副标题:</label><input type="text" id="alt_title" name="alt_title" value="{{ .Subject.AltTitle }}"></p>
+          <p><label for="creator">{{ .CreatorLabel }}:</label><input type="text" id="creator" name="creator" value="{{ .Subject.Creator }}"></p>
+          <p><label for="press">{{ .PressLabel }}:</label><input type="text" id="press" name="press" value="{{ .Subject.Press }}"></p>
+          <p><label for="pub_date">{{ .PubDateLabel }}:</label><input type="text" id="pub_date" name="pub_date" value="{{ .Subject.PubDate }}"></p>
+          <p><label for="mark_date">标记日期:</label><input type="date" id="mark_date" name="mark_date" value="{{ .Subject.MarkDate }}"></p>
+          <p><label for="external_url">外部链接:</label>
+            <input type="text" id="external_url" name="external_url" value="{{ .Subject.ExternalURL }}" {{ if .ReadOnlyExternal }}readonly{{ end }}>
+          </p>
+
+          <div class="edit-select">
+            <div class="edit-select-list">
+              <label for="subject_type">条目分类:</label>
+              <select id="subject_type" name="subject_type">
+                {{ range $opt := .CategoryOptions }}
+                  <option value="{{ $opt.Value }}" {{ if $opt.Selected }}selected{{ end }}>{{ $opt.Label }}</option>
+                {{ end }}
+              </select>
+            </div>
+
+            <div class="edit-select-list">
+              <label for="status">标记状态:</label>
+              <select id="status" name="status">
+                {{ range $opt := .StatusOptions }}
+                  <option value="{{ $opt.Value }}" {{ if $opt.Selected }}selected{{ end }}>{{ $opt.Label }}</option>
+                {{ end }}
+              </select>
+            </div>
+
+            <div class="edit-select-list">
+              <label for="rating">我的评分:</label>
+              <select id="rating" name="rating">
+                {{ range $opt := .RatingOptions }}
+                  <option value=" {{ $opt.Value }} " {{ if $opt.Selected }}selected{{ end }}>{{ $opt.Label }}</option>
+                {{ end }}
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    {{ if eq .ManageType 2 }}
+    <div class="edit-upload">
+        <label for="image">更新封面:</label>
+        <input type="file" id="image" name="image">
+    </div>
+    {{ else if eq .ManageType 3 }}
+    <div class="edit-upload">
+      <label for="image">上传封面:</label>
+      <input type="file" id="image" name="image">
+    </div>
+    {{ end }}
+
+    <div class="subject-intro">
+      <h3 class="subject-intro-title">{{ .SummaryLabel }}</h3>
+      <textarea id="summary" name="summary">{{ .Subject.Summary }}</textarea>
+    </div>
+
+    <div>
+      <h3 class="subject-intro-title">我的评论</h3>
+      <textarea id="comment" name="comment">{{ .Subject.Comment }}</textarea>
+    </div>
+
+    <input type="hidden" name="manage_type" value="{{ .ManageType }}">
+    <button type="submit">{{ .ButtonText }}</button><a class="cancel-link" href="{{ .CancelURL }}">{{ .CancelText }}</a>
+  </form>
+</main>
+{{ end }}

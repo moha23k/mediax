@@ -1,0 +1,43 @@
+{{ define "main" }}
+<main>
+    <h1 class="page-heading">👋 {{ .Today }}</h1>
+    {{ range .RecentGroups }}
+    <section class="home-section">
+        <div class="home-section-heading">
+            <div class="page-heading">
+                {{ .CategoryIcon }}
+                <a href="/{{ .SubjectType }}"><h2>最近{{ .SubjectTypeName }}</h2></a>
+            </div>
+            <a class="home-add-button" href="/add?subject_type={{ .SubjectType }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" fill="#f5f5f7"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 13h-5v5h-2v-5h-5v-2h5v-5h2v5h5v2z"/></svg>
+            </a>
+        </div>
+        
+        <div class="home-cover-box">
+            <div class="home-cover-overlay"></div>
+            {{ range .Items }}
+            <div class="home-item-cover" >
+                <img class="home-item-img" src="{{ .ImageURL }}" loading="lazy">
+            </div>
+            {{ end }}
+        </div>
+        <div class="home-summary">
+        {{ if eq .Summary.YearCount 0 }}
+            <i>时光空白，新的故事在前方等待。</i>
+        {{ else }}
+            <p>最近一个月，{{ .SubjectActionFullName }}了 <span>{{ .Summary.MonthCount }}</span> {{ .SubjectUnitName }}</p>
+            <p>最近半年，{{ .SubjectActionFullName }}了 <span>{{ .Summary.HalfYearCount }}</span> {{ .SubjectUnitName }}</p>
+            <p>最近一年，{{ .SubjectActionFullName }}了 <span>{{ .Summary.YearCount }}</span> {{ .SubjectUnitName }}</p>
+            {{ if eq .Summary.LastItem.Status 2 }}
+            <p>最近于 {{ .Summary.LastItem.Date }} 在{{ .SubjectActionShortName }}
+            {{ else }}
+            最近于 {{ .Summary.LastItem.Date }} {{ .SubjectActionShortName }}过
+            {{ end }}
+            <a href="{{ .Summary.LastItem.SubjectURL }}"><i>{{ .Summary.LastItem.Title }}</i></a>
+            </p>
+        {{ end }}
+        </div>
+    </section>
+    {{ end }}
+</main>
+{{ end }}

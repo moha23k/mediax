@@ -1,0 +1,35 @@
+{{ define "main" }}
+<main>
+    <h2 class="page-heading">添加条目</h2>
+    <p>1. 选择添加的类型:</p>
+    <form id="mediaForm" action="/add" method="POST">
+        <div class="add-list">
+            {{ range .Header.Options }} 
+            <div class="add-item">
+                <input type="radio" id="{{ .Category }}" name="subject_type" value="{{ .Category }}" {{ if eq $.Header.Current .Category }}checked{{ end }} hidden>
+                <label for="{{ .Category }}">
+                    <div class="add-dot"></div>
+                    <span>{{ .CategoryName }}</span>
+                </label>
+                <span class="add-check-icon"></span>
+            </div>
+            {{ end }}
+        </div>
+        <div class="edit-detail add-pre">
+            <p>2. 尝试自动获取数据:</p>
+            <p>
+                <label for="external_url">链接地址:</label>
+                <input type="text" id="external_url" name="external_url">
+            </p>
+            <p class="note-color">从 Douban 导入链接格式如下:</p>
+            <p class="note-color">- 图书: https://book.douban.com/subject/xxxxxx</p>
+            <p class="note-color">- 游戏: https://www.douban.com/game/xxxxxx</p>
+            <p class="note-color">- 其他: https://movie.douban.com/subject/xxxxxx</p>
+            <p class="note-color">从 Bangumi 导入链接格式如下:</p>
+            <p class="note-color">- 通用: https://bgm.tv/subject/xxxxxx</p>
+            <p class="note-color">* 链接中请不要添加多余参数，如需手动添加留空即可。</p>
+        </div>
+        <button type="submit">下一步</button>
+    </form>
+</main>
+{{ end }}
